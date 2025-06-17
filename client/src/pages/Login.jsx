@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // const Login = () => {
 // return <div>Login</div>;
@@ -16,8 +16,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+} from "@/features/api/authApi";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [loginInput, setLoginInput] = useState({ email: "", password: "" });
   const [signupInput, setSignupInput] = useState({
     name: "",
@@ -25,9 +33,29 @@ const Login = () => {
     password: "",
   });
 
+  const [
+    registerUser,
+    {
+      data: registerData,
+      error: registerError,
+      isLoading: registerIsLoading,
+      isSuccess: registerIsSuccess,
+    },
+  ] = useRegisterUserMutation();
+  const [
+    loginUser,
+    {
+      data: loginData,
+      error: loginError,
+      isLoading: loginIsLoading,
+      isSuccess: loginIsSuccess,
+    },
+  ] = useLoginUserMutation();
+
   //Getting data from input field
   const changeInputHandler = (e, type) => {
     const { name, value } = e.target;
+
     if (type === "signup") {
       setSignupInput({ ...signupInput, [name]: value });
     } else {
@@ -35,15 +63,43 @@ const Login = () => {
     }
   };
 
-  const handleRegistration = (type) => {
+  const handleRegistration = async (type) => {
     const inputData = type === "signup" ? signupInput : loginInput;
     console.log(inputData);
-    
+    const action = type === "signup" ? registerUser : loginUser;
+    await action(inputData);
   };
 
+  useEffect(() => {
+    if (registerIsSuccess && registerData) {
+      toast.success(registerData.message || "Signup Successfully");
+    }
+
+    if (registerError) {
+      toast.error(registerError.data.message || "Signup Failed");
+    }
+
+    if (loginIsSuccess && loginData) {
+      toast.success(loginData.message || "Login Successfully");
+      navigate("/")
+    }
+    if (loginError) {
+      toast.error(loginError.data.message || "Login Failed");
+    }
+  }, [
+    loginIsLoading,
+    registerIsLoading,
+    loginData,
+    registerData,
+    loginError,
+    registerError,
+  ]);
+
+  
+
   return (
-    <div className="flex items-center justify-center w-full">
-      <Tabs defaultValue="Signup" className="w-[400px]">
+    <div className="flex items-center justify-center w-full mt-20">
+      <Tabs defaultValue="Login" className="w-[400px]">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="Signup">Signup</TabsTrigger>
           <TabsTrigger value="Login">Login</TabsTrigger>
@@ -92,8 +148,18 @@ const Login = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button onClick={() => handleRegistration("signup")}>
-                Signup
+              <Button
+                disabled={registerIsLoading}
+                onClick={() => handleRegistration("signup")}
+              >
+                {registerIsLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 2-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  "Signup"
+                )}
               </Button>
             </CardFooter>
           </Card>
@@ -116,7 +182,7 @@ const Login = () => {
                   placeholder="eg. hari@Kumar.com"
                   required
                   onChange={(e) => changeInputHandler(e, "login")}
-                  />
+                />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="tabs-demo-new"> Password</Label>
@@ -131,7 +197,19 @@ const Login = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button onClick={() => handleRegistration("login")}>Login</Button>
+              <Button
+                disabled={loginIsLoading}
+                onClick={() => handleRegistration("login")}
+              >
+                {loginIsLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 2-4 animate-spin" />
+                    Please wait
+                  </>
+                ) : (
+                  "login"
+                )}
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
