@@ -171,16 +171,18 @@ export const editLecture = async (req, res) => {
     const { lectureTitle, isPreviewFree, videoInfo } = req.body;
     const { courseId, lectureId } = req.params;
 
+  9
+
     const lecture = await Lecture.findById(lectureId);
     if (!lecture) {
-      return res.status(404).json({ message: "LEcture Not Found" });
+      return res.status(404).json({ message: "Lecture Not Found" });
     }
     //update Lecture
     if (lectureTitle) lecture.lectureTitle = lectureTitle;
 
-    if (videoInfo.videoUrl) lecture.videoUrl = videoInfo.videoUrl;
-    if (videoInfo.publicId) lecture.publicId = videoInfo.publicId;
-    if (isPreviewFree) lecture.isPreviewFree = isPreviewFree;
+    if (videoInfo?.videoUrl) lecture.videoUrl = videoInfo.videoUrl;
+    if (videoInfo?.publicId) lecture.publicId = videoInfo.publicId;
+    lecture.isPreviewFree = isPreviewFree;
     await lecture.save();
 
     //Endure the course still has the lecture id if It was not alreadey added
@@ -246,3 +248,53 @@ export const getLectureById = async (req, res) => {
       .json({ success: false, message: "Failed to Get Lecture By Id", error });
   }
 };
+
+
+export const getPublishedCourse=async(req,res)=>{
+  try {
+
+    const courses = await Course.find({isPublished:true}).populate({path:"creator",select:"name photoUrl"});
+    if(!courses){
+      return res.status(404).json({message:"Courses Not Found"})
+    }
+    
+    
+
+    return res.status(200).json({courses})
+
+  } catch (error) {
+        console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to Get Published courses", error });
+  }
+
+}
+
+
+//publish & unpublish course Logics
+export const togglePublishCourse = async(req,res)=>{
+  try {
+    const {courseId}=req.params;
+    const {publish} = req.query;
+
+    const course = await Course.findById(courseId)
+    if (!course) {
+      return res.status(404).json({ message: "course Not Found" });
+    }
+
+    //publish status based on the query paramater
+    course.isPublished = publish === "true";
+    await course.save();
+
+    const statusMessage = course.isPublished ? "Published" :  "Unpublished"
+    return res.status(200).json({message:`course is ${statusMessage}`})
+    
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to Update status", error });
+  }
+}
+
+

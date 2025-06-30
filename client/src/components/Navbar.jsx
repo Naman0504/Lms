@@ -56,7 +56,9 @@ const Navbar = () => {
       <div className=" max-w-7xl mx-auto hidden md:flex items-center justify-between h-full gap-10">
         <div className="flex items-center gap-2">
           <BookText size={30} />
-          <h1 className="hidden md:block font-extrabold text-2xl"></h1>
+          <Link to="/">
+          <h1 className="hidden md:block font-bold text-2xl">E-learn</h1>
+          </Link>
         </div>
 
         {/* //user Icon And DArk Mode Feature */}
