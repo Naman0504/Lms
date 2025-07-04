@@ -6,16 +6,16 @@ import { Link } from "react-router-dom";
 
 const Course = ({course}) => {
   return (
-    <Link to={`course-details/${course._id}`}>
-    <Card className="overflow-hidden rounded-lg p-0 m-0  border-2 border-red-800 bg-white  dark:bg-gray-800 shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500">
-      <div className="relative border-2 border-green-700">
+    <Link to={`/course-details/${course._id}`}>
+    <Card className="overflow-hidden rounded-lg p-0 m-0 bg-white  dark:bg-gray-800 shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500">
+      <div className="relative">
         <img
-          className="h-36 w-full object-cover rounded-t-lg border-2 border-amber-300"
+          className="h-36 w-full object-cover rounded-t-lg"
           src={course.courseThumbnail}
           alt=""
         />
       </div>
-      <CardContent className="px-4 py-4 border-2 border-blue-600">
+      <CardContent className="px-4 py-4">
         <h1 className="hover:underline font-semibold text-lg truncate">
           {course.courseTitle}
         </h1>

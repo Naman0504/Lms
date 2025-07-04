@@ -61,14 +61,15 @@ export const editCourses = async (req, res) => {
     } = req.body;
     const thumbnail = req.file;
 
+
     let course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course Not Found" });
     }
 
     //delete Old thumbnail
-    let courseThumbnail;
-    if (courseThumbnail) {
+    let courseThumbnail = null;
+    if (thumbnail) {
       if (course.courseThumbnail) {
         const publicId = course.courseThumbnail.split("/").pop().split(".")[0];
         await deleteMediaFromCloudinary(publicId);
@@ -76,7 +77,11 @@ export const editCourses = async (req, res) => {
 
       //upload thumbnail on cloudinary
       courseThumbnail = await uploadMedia(thumbnail.path);
+      // courseThumbnail = uploaded?.secure_url;
+      
+
     }
+    
 
     const updatedData = {
       courseTitle,
@@ -87,6 +92,7 @@ export const editCourses = async (req, res) => {
       coursePrice,
       courseThumbnail: courseThumbnail?.secure_url,
     };
+
 
     course = await Course.findByIdAndUpdate(courseId, updatedData);
     return res
