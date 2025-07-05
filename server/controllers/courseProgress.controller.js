@@ -67,7 +67,7 @@ export const updateLectureProgress = async (req, res) => {
     const lectureIndex = courseProgress.lectureProgress.findIndex(
       (lecture) => lecture.lectureId === lectureId
     );
-    if (!lectureIndex !== -1) {
+    if (lectureIndex !== -1) {
       //if Lecture Already Exist, Update its status
       courseProgress.lectureProgress[lectureIndex].viewed = true;
     } else {
