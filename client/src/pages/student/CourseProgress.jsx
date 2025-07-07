@@ -32,6 +32,20 @@ const CourseProgress = () => {
     inCompleteCourse,
     { data: markInCompleteData, isSuccess: inCompletedSuccess },
   ] = useInCompleteCourseMutation();
+
+  useEffect(() => {
+    console.log(markCompleteData);
+
+    if (completedSuccess) {
+      refetch();
+      toast.success(markCompleteData.message);
+    }
+    if (inCompletedSuccess) {
+      refetch();
+      toast.success(markInCompleteData.message);
+    }
+  }, [completedSuccess, inCompletedSuccess]);
+
   const [currentLecture, setCurrentLecture] = useState(null);
   if (isLoading) return <p>Loadind...</p>;
   if (isError) return <p>Failed to Load Data...</p>;
@@ -47,14 +61,15 @@ const CourseProgress = () => {
     return progress.some((prog) => prog.lectureId === lectureId && prog.viewed);
   };
 
-  //select Video Handle for watching video
-  const selectVideoHandler = (lecture) => {
-    setCurrentLecture(lecture);
+  const updateLectureProgressHandler = async (lectureId) => {
+    await updateLectureProgress({ courseId, lectureId }).unwrap();
     refetch();
   };
 
-  const updateLectureProgressHandler = async (lectureId) => {
-    await updateLectureProgress({ courseId, lectureId }).unwrap();
+  //select Video Handle for watching video
+  const selectVideoHandler = (lecture) => {
+    setCurrentLecture(lecture);
+    updateLectureProgressHandler(lecture._id)
     refetch();
   };
 
@@ -64,17 +79,6 @@ const CourseProgress = () => {
   const handleInCompleteCourse = async () => {
     await inCompleteCourse(courseId);
   };
-
-  useEffect(() => {
-    console.log(markCompleteData)
-    if (completedSuccess) {
-      toast.success(markCompleteData.message);
-    }
-
-    if (inCompletedSuccess) {
-      toast.success(markInCompleteData.message);
-    }
-  }, [completedSuccess, inCompletedSuccess]);
 
   return (
     <div className="mt-20 h-full max-w-7xl mx-auto p-4">

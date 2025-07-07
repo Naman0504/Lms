@@ -76,7 +76,7 @@ export const verifyPayment = async (req, res) => {
     await CoursePurchase.findOneAndUpdate(
       { paymentId: razorpay_order_id },
       { status: "failed" }
-    );
+    ).populate("courseId");
     res.status(400).json({ success: false, message: "Invalid signature" });
   }
 };

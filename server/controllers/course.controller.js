@@ -61,7 +61,6 @@ export const editCourses = async (req, res) => {
     } = req.body;
     const thumbnail = req.file;
 
-
     let course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course Not Found" });
@@ -78,10 +77,7 @@ export const editCourses = async (req, res) => {
       //upload thumbnail on cloudinary
       courseThumbnail = await uploadMedia(thumbnail.path);
       // courseThumbnail = uploaded?.secure_url;
-      
-
     }
-    
 
     const updatedData = {
       courseTitle,
@@ -92,7 +88,6 @@ export const editCourses = async (req, res) => {
       coursePrice,
       courseThumbnail: courseThumbnail?.secure_url,
     };
-
 
     course = await Course.findByIdAndUpdate(courseId, updatedData);
     return res
@@ -177,7 +172,7 @@ export const editLecture = async (req, res) => {
     const { lectureTitle, isPreviewFree, videoInfo } = req.body;
     const { courseId, lectureId } = req.params;
 
-  9
+    9;
 
     const lecture = await Lecture.findById(lectureId);
     if (!lecture) {
@@ -246,7 +241,7 @@ export const getLectureById = async (req, res) => {
       return res.status(404).json({ message: "lecture Not Found" });
     }
 
-    return res.status(200).json({lecture})
+    return res.status(200).json({ lecture });
   } catch (error) {
     console.log(error);
     return res
@@ -255,36 +250,77 @@ export const getLectureById = async (req, res) => {
   }
 };
 
-
-export const getPublishedCourse=async(req,res)=>{
+export const searchCourse = async(req,res) => {
   try {
+    const { query = "", categories = [], sortByPrice = "" } = req.query;
 
-    const courses = await Course.find({isPublished:true}).populate({path:"creator",select:"name photoUrl"});
-    if(!courses){
-      return res.status(404).json({message:"Courses Not Found"})
+    //create Search Query
+    const searchCriteria = {
+      isPublished: true,
+      $or: [
+        
+          {courseTitle: { $regex: query, $options: "i" }},
+          {subTitle: { $regex: query, $options: "i" }},
+          {category: { $regex: query, $options: "i" }}
+        
+      ],
+    };
+
+
+    //If Categories are Selected
+    if(categories.length>0){
+      searchCriteria.category = {$in:categories}
     }
-    
-    
 
-    return res.status(200).json({courses})
+    //defining sorting order
+    const sortOptions = {};
+    if(sortByPrice ==="low"){
+      sortOptions.coursePrice = 1; //sort by Price in Ascending order
+    }
+    else if(sortByPrice ==="high"){
+      sortOptions.coursePrice = -1; //sort by Price in descending order
+    }
+
+    let courses = await Course.find(searchCriteria).populate({path:"creator",slect:"name photoUrl"}).sort(sortOptions);
+
+    return res.status(200).json({success:true,courses:courses || []})
 
   } catch (error) {
-        console.log(error);
+    console.log(error);
     return res
       .status(500)
-      .json({ success: false, message: "Failed to Get Published courses", error });
+      .json({ success: false, message: "Failed to Get Courses", error });
   }
+};
 
-}
+export const getPublishedCourse = async (req, res) => {
+  try {
+    const courses = await Course.find({ isPublished: true }).populate({
+      path: "creator",
+      select: "name photoUrl",
+    });
+    if (!courses) {
+      return res.status(404).json({ message: "Courses Not Found" });
+    }
 
+    return res.status(200).json({ courses });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to Get Published courses",
+      error,
+    });
+  }
+};
 
 //publish & unpublish course Logics
-export const togglePublishCourse = async(req,res)=>{
+export const togglePublishCourse = async (req, res) => {
   try {
-    const {courseId}=req.params;
-    const {publish} = req.query;
+    const { courseId } = req.params;
+    const { publish } = req.query;
 
-    const course = await Course.findById(courseId)
+    const course = await Course.findById(courseId);
     if (!course) {
       return res.status(404).json({ message: "course Not Found" });
     }
@@ -293,14 +329,11 @@ export const togglePublishCourse = async(req,res)=>{
     course.isPublished = publish === "true";
     await course.save();
 
-    const statusMessage = course.isPublished ? "Published" :  "Unpublished"
-    return res.status(200).json({message:`course is ${statusMessage}`})
-    
+    const statusMessage = course.isPublished ? "Published" : "Unpublished";
+    return res.status(200).json({ message: `course is ${statusMessage}` });
   } catch (error) {
     res
       .status(500)
       .json({ success: false, message: "Failed to Update status", error });
   }
-}
-
-
+};
