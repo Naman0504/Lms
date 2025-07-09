@@ -7,11 +7,20 @@ import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 //Resistering or signup the User
 export const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password ,role = "student"} = req.body;
     if (!name || !email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required", error });
+    }
+
+    
+    const allowedRoles = ["student", "instructor"];
+    if (!allowedRoles.includes(role)) {
+      return res.status(400).json({
+        success: false,
+        message: `Role must be one of: ${allowedRoles.join(", ")}`,
+      });
     }
 
     const user = await User.findOne({ email });
@@ -28,6 +37,7 @@ export const register = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      role, 
     });
 
     return res.status(200).json({
@@ -98,7 +108,7 @@ export const getUserProfile = async (req, res) => {
   try {
     const userId = req.id;
 
-    const user = await User.findById(userId).select("-password");
+    const user = await User.findById(userId).select("-password").populate("enrolledCourses");
     if (!user) {
       return res
         .status(404)

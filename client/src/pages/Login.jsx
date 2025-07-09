@@ -31,6 +31,7 @@ const Login = () => {
     name: "",
     email: "",
     password: "",
+    role: "student",
   });
 
   const [
@@ -73,6 +74,11 @@ const Login = () => {
   useEffect(() => {
     if (registerIsSuccess && registerData) {
       toast.success(registerData.message || "Signup Successfully");
+      if (registerData.role === "instructor") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/");
+      }
     }
 
     if (registerError) {
@@ -81,7 +87,7 @@ const Login = () => {
 
     if (loginIsSuccess && loginData) {
       toast.success(loginData.message || "Login Successfully");
-      navigate("/")
+      navigate("/");
     }
     if (loginError) {
       toast.error(loginError.data.message || "Login Failed");
@@ -94,8 +100,6 @@ const Login = () => {
     loginError,
     registerError,
   ]);
-
-  
 
   return (
     <div className="flex items-center justify-center w-full mt-20">
@@ -145,6 +149,20 @@ const Login = () => {
                   onChange={(e) => changeInputHandler(e, "signup")}
                   value={signupInput.password}
                 />
+              </div>
+              <div className="flex gap-2 mt-2">
+                <Input
+                  className="w-4 h-4"
+                  type="checkbox"
+                  id="instructor"
+                  onChange={(e) =>
+                    setSignupInput({
+                      ...signupInput,
+                      role: e.target.checked ? "instructor" : "student",
+                    })
+                  }
+                />
+                <Label htmlFor="instructor">Sign up as an Instructor</Label>
               </div>
             </CardContent>
             <CardFooter>

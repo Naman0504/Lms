@@ -1,6 +1,6 @@
 import Razorpay from "razorpay";
 import crypto from "crypto";
-import { CoursePurchase } from "../models/coursePurchase.model.js";
+import { CoursePurchase } from "../models/purchaseCourse.model.js";
 import { Lecture } from "../models/lecture.model.js";
 import { Course } from "../models/course.model.js";
 import { User } from "../models/user.model.js";
@@ -134,7 +134,7 @@ export const getAllPurchasedCourse = async (req, res) => {
     const purchasedCourse = await CoursePurchase.find({
       statys: "completed",
     }).populate("courseId");
-    if (!purchaseCourse) {
+    if (!purchasedCourse) {
       return res.status(404).json({ purchasedCourse: [] });
     }
 

@@ -43,6 +43,8 @@ const Navbar = () => {
     await logoutUser();
   };
 
+
+
   useEffect(() => {
     if (isSuccess) {
       navigate("/login");
@@ -94,7 +96,8 @@ const Navbar = () => {
                 {user.role === "instructor" && (
                   <>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                    <DropdownMenuItem>
+                   <Link to="/admin/dashboard">Dashboard</Link></DropdownMenuItem>
                   </>
                 )}
               </DropdownMenuContent>
