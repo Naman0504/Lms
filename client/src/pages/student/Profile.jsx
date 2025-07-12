@@ -19,27 +19,37 @@ import {
   useUpdateUserMutation,
 } from "@/features/api/authApi";
 import { toast } from "sonner";
+import { useGetPublishedCourseQuery } from "@/features/api/courseApi";
+import { Link } from "react-router-dom";
 
 const Profile = () => {
   const [name, setName] = useState("");
   const [profilePhoto, setProfilePhoto] = useState("");
   const [open, setOpen] = useState(false); // dialog open state
 
-  const { data, isLoading, refetch} = useLoadUserQuery();
-  const [updateUser, { data: updateUserData, isLoading: updateUserIsLoading, isError, error, isSuccess }] = useUpdateUserMutation();
+  const { data, isLoading, refetch } = useLoadUserQuery();
+  const [
+    updateUser,
+    {
+      data: updateUserData,
+      isLoading: updateUserIsLoading,
+      isError,
+      error,
+      isSuccess,
+    },
+  ] = useUpdateUserMutation();
+  const { data: publishedCourses } = useGetPublishedCourseQuery();
+  console.log("publishedCourses: ", publishedCourses);
 
   const onChangehandler = (e) => {
     const file = e.target.files?.[0];
     if (file) setProfilePhoto(file);
   };
 
-  // useEffect(() => {
-  //   if (open && data?.user?.name) {
-  //     setName(data.user.name);
-  //   }
+  useEffect(() => {
 
-  //   refetch()
-  // }, [open, data]);
+    refetch()
+  }, []);
 
   useEffect(() => {
     if (isSuccess) {
@@ -65,14 +75,23 @@ const Profile = () => {
     setOpen(false);
   };
 
-  if (isLoading) return <h1 className="text-center my-10 text-xl">Profile Loading...</h1>;
+  if (isLoading)
+    return <h1 className="text-center my-10 text-xl">Profile Loading...</h1>;
 
   const user = data?.user;
 
   const enrolledCourses = user?.enrolledCourses || [];
 
+  const userid = user?._id;
+
+  const publishedCourseofCreator =
+    publishedCourses?.courses.filter(
+      (course) => course?.creator?._id === userid
+    ) || [];
+  console.log("publishedCourseofCreator: ", publishedCourseofCreator);
+
   return (
-    <div className="my-24 max-w-4xl mx-auto px-4">
+    <div className="my-24 max-w-4xl mx-auto h-screen px-4">
       <h1 className="font-bold text-2xl text-center md:text-left">Profile</h1>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 my-5">
         <div className="flex flx-col items-center">
@@ -149,7 +168,10 @@ const Profile = () => {
                 </div>
               </div>
               <DialogFooter>
-                <Button disabled={updateUserIsLoading} onClick={updateUserHandler}>
+                <Button
+                  disabled={updateUserIsLoading}
+                  onClick={updateUserHandler}
+                >
                   {updateUserIsLoading ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -167,16 +189,30 @@ const Profile = () => {
 
       <div className="mt-8">
         <h1 className="font-semibold text-xl w-fit px-5 border-b bg-gradient-to-r from-rose-100 to-teal-100 border-t border-gray-50">
-          Courses you are Enrolled in
+          {user.role === "instructor"
+            ? "Courses you have Published"
+            : "Courses you are Enrolled in"}
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-5">
-          {enrolledCourses.length === 0 ? (
+          {enrolledCourses.length && enrolledCourses.length === 0 ? (
             <h1 className="text-lg text-gray-500 col-span-full text-center">
-              You haven't enrolled in any courses yet
+              {user.role === "instructor"
+                ? "You haven't published any courses yet"
+                : "You haven't enrolled in any courses yet"}
             </h1>
+          ) : user.role === "instructor" ? (
+            publishedCourseofCreator.map((course) => (
+              <Link key={course._id} to="/admin/course">
+                {" "}
+                <Course course={course} />
+              </Link>
+            ))
           ) : (
             enrolledCourses.map((course) => (
-              <Course course={course} key={course._id} />
+              <Link to={`/course-details/${course._id}`}>
+                
+                <Course course={course} key={course._id} />
+              </Link>
             ))
           )}
         </div>

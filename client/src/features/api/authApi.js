@@ -42,6 +42,7 @@ export const authApi = createApi({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           dispatch(userLoggedOut());
+          dispatch(api.util.resetApiState());
         } catch (error) {
           console.log(error);
         }

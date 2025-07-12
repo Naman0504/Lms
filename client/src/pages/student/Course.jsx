@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const Course = ({course}) => {
   return (
-    <Link to={`/course-details/${course._id}`}>
+
     <Card className="overflow-hidden rounded-lg p-0 m-0 bg-white  dark:bg-gray-800 shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500">
       <div className="relative">
         <img
@@ -39,7 +39,7 @@ const Course = ({course}) => {
         </div>
       </CardContent>
     </Card>
-    </Link>
+    
   );
 };
 

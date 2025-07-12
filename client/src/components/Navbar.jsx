@@ -35,8 +35,12 @@ import { useLogoutUserMutation } from "@/features/api/authApi";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 
+
+
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
+  
+
   const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
   const navigate = useNavigate();
   const logoutHandler = async () => {
@@ -55,7 +59,7 @@ const Navbar = () => {
   return (
     <div className="h-16 dark:bg-[#0A0A0A] bg-white border-b  dark:border-b-gray-700 border-b-gray-300 fixed top-0 left-0 right-0 duration-300 z-10">
       {/* //desktop */}
-      <div className=" max-w-7xl mx-auto hidden md:flex items-center justify-between h-full gap-10">
+      <div className="max-w-7xl mx-auto hidden md:flex items-center justify-between h-full gap-10">
         <div className="flex items-center gap-2">
           <BookText size={30} />
           <Link to="/">
@@ -64,8 +68,9 @@ const Navbar = () => {
         </div>
 
         {/* //user Icon And DArk Mode Feature */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center">
           {user ? (
+            <>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar className="w-10 h-10">
@@ -80,9 +85,11 @@ const Navbar = () => {
               <DropdownMenuContent className="w-56" align="start">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
-                    <Link to="my-learning">My Learnig</Link>
-                  </DropdownMenuItem>
+                  {user.role == "student" && (
+                    <DropdownMenuItem>
+                      <Link to="my-learning">My Learning</Link>
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem>
                     <Link to="profile">Edit Profile</Link>
                   </DropdownMenuItem>
@@ -102,6 +109,10 @@ const Navbar = () => {
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
+            <p className="text-gray-700 dark:text-gray-100 font-semibold text-sm ml-2">
+              {user.name}
+            </p>
+            </>
           ) : (
             <div className="flex items-center gap-2">
               <Button variant="outline" onClick={() => navigate("/login")}>
@@ -111,7 +122,7 @@ const Navbar = () => {
             </div>
           )}
 
-          <DarkMode />
+          {/* <DarkMode /> */}
         </div>
       </div>
 

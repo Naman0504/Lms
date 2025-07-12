@@ -9,32 +9,39 @@ import { Button } from "@/components/ui/button";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
-  
+
   const query = searchParams.get("query");
-  const [selectedCategories, setSelectedCategories] = useState([]);
+  // const [selectedCategories, setSelectedCategories] = useState("");
   const [sortByPrice, setSortByPrice] = useState("");
 
   const { data, isLoading } = useGetSearchCourseQuery({
     searchQuery: query,
-    categories: selectedCategories,
+    // categories: selectedCategories,
     sortByPrice,
   });
 
+
   const isEmpty = !isLoading && data?.courses.length === 0;
 
-  const handleFilterChange = (categories, price) => {
-    setSelectedCategories(categories);
+  const handleFilterChange = (price) => {
+    // setSelectedCategories(categories);
     setSortByPrice(price);
   };
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-8">
+    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-8 border-2 border-red-800 h-[90vh]">
       <div className="my-6 ">
-        <h1 className="font-bold text-xl md:text-2xl">Result for "{query}"</h1>
-        <p>
-          Showing result for {""}
-          <span className="text-blue-700 font-bold italic">{query}</span>
-        </p>
+        {query && (
+          <>
+            <h1 className="font-bold text-xl md:text-2xl">
+              Result for "{query}"
+            </h1>
+            <p>
+              Showing result for {""}
+              <span className="text-blue-700 font-bold italic">{query}</span>
+            </p>
+          </>
+        )}
       </div>
       <div className="flex flex-col md:flex-row gap-10 ">
         <Filter handleFilterChange={handleFilterChange} />
@@ -46,7 +53,9 @@ const SearchPage = () => {
           ) : isEmpty ? (
             <CourseNotFound />
           ) : (
-            data?.courses?.map((course) => <SearchResult key={course._id} course={course} />)
+            data?.courses?.map((course) => (
+              <SearchResult key={course._id} course={course} />
+            ))
           )}
         </div>
       </div>

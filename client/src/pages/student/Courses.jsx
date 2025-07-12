@@ -9,7 +9,7 @@ const Courses = () => {
   if(isError) return <h1>Some Error occurred while fetching courses</h1>
   
   return (
-    <div className="bg-gray-50 border-2 border-amber-800">
+    <div className="bg-gray-50 border-2 border-green-600 bg-[url('client/src/assets/bg-image.jpg')] bg-cover bg-center">
       <div className="max-w-7xl mx-auto p-6">
         <h2 className="font-bold text-3xl text-center mb-10">Our Courses</h2>
 

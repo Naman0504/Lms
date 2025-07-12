@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLoadUserQuery } from "@/features/api/authApi";
 import { useGetPurchasedCoursesQuery } from "@/features/api/paymentApi";
 import React from "react";
 import {
@@ -13,22 +14,36 @@ import {
 
 const Dashboard = () => {
   const { data, isSuccess, isLoading, isError } = useGetPurchasedCoursesQuery();
+  const { data: userData } = useLoadUserQuery();
+
+  console.log("User data: ", userData);
+  console.log("dashboard data: ", data);
+
+  const userid = userData?.user?._id; // Adjust based on your actual user schema
+
+  // Filter courses for this user
+  const purchasedCourses =
+    data?.purchasedCourse.filter((course) => course?.courseId?.creator === userid) || [];
+
+  console.log("Filtered Purchased Courses: ", purchasedCourses);
 
   if (isLoading) return <h1>Loading...</h1>;
   if (isLoading)
     return <h1 className="text-red-500">Failed to get Purchased Course.</h1>;
 
-  const purchasedCourse = data || [];
-  const courseData = purchasedCourse.map((course) => ({
+  // const  purchasedCourses  = data || [];
+
+  const courseData = purchasedCourses.map((course) => ({
     name: course.courseId.courseTitle,
     price: course.courseId.coursePrice,
   }));
 
-  const totalRevenue = purchasedCourse.reduce((acc, ele) => {
+  const totalRevenue = purchasedCourses.reduce((acc, ele) => {
     acc + ele.amount || 0;
+    return acc + ele.amount;
   }, 0);
 
-  const sales = purchasedCourse.length
+  const sales = purchasedCourses.length;
 
   return (
     <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

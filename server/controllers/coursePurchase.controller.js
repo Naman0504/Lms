@@ -43,7 +43,7 @@ export const verifyPayment = async (req, res) => {
       { paymentId: razorpay_order_id },
       { status: "completed", paymentId: razorpay_payment_id },
       { new: true }
-    );
+    ).populate("courseId"); ;
 
     //make all lectures visible by setting "isPreview" to true
     if (purchase.courseId && purchase.courseId.lectures.length > 0) {
@@ -132,7 +132,7 @@ export const getCourseDetailWithPurchaseStatus = async (req, res) => {
 export const getAllPurchasedCourse = async (req, res) => {
   try {
     const purchasedCourse = await CoursePurchase.find({
-      statys: "completed",
+      status: "completed",
     }).populate("courseId");
     if (!purchasedCourse) {
       return res.status(404).json({ purchasedCourse: [] });

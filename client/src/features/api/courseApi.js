@@ -100,10 +100,11 @@ export const courseApi = createApi({
         let queryString = `/search?query=${encodeURIComponent(searchQuery)}`;
 
         //append category
-        if (categories && categories.length > 0) {
-          const categoriesString = categories.map(encodeURIComponent).join(",");
-          queryString += `&categories=${categoriesString}`;
-        }
+        
+    //      if (categories && categories.length > 0) {
+    //   const categoriesString = categories.map(encodeURIComponent).join(",");
+    //   queryString += `&categories=${categoriesString}`;
+    // }
 
         //Append Sort By Price
         if (sortByPrice) {
@@ -112,7 +113,6 @@ export const courseApi = createApi({
         return {
           url: queryString,
           method: "GET",
-          
         };
       },
     }),

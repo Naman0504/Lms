@@ -52,9 +52,9 @@ const BuyCourseButton = ({ amount,courseThumbnail,courseName, courseId, userId, 
           if (result.success) {
             alert("✅ Payment successful and verified!");
             // ✅ Redirect user to course page or success page
-            navigate(`/courses-progress/${courseId}`);
+            navigate(`/course-progress/${courseId}`);
           } else {
-            navigate(`/courses-details/${courseId}`);
+            navigate(`/course-details/${courseId}`);
           }
         },
         // callback_url: "http://localhost:8080/payment-success",

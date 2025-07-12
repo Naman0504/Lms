@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Funnel } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Filter = ({ handleFilterChange }) => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [sortyByPrice, setSortByPrice] = useState("");
+  // const [selectedCategories, setSelectedCategories] = useState([]);
+  const [sortByPrice, setSortByPrice] = useState("");
   const categories = [
     { id: "nextjs", label: "Next JS" },
     { id: "data science", label: "Data Science" },
@@ -30,28 +30,28 @@ const Filter = ({ handleFilterChange }) => {
     { id: "html", label: "HTML" },
   ];
 
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategories((prevCategories) => {
-      const newCategories = prevCategories.includes(categoryId)
-        ? prevCategories.filter((id) => id !== categoryId)
-        : [...prevCategories, categoryId];
+ useEffect(() => {
+    // Trigger filter update on load
+    if (sortByPrice) {
+      handleFilterChange(sortByPrice);
+    }
+  }, []);
 
-        handleFilterChange(newCategories,sortyByPrice)
-    });
+
+
+
+  const selectByPriceHandler = (selectedValue) => {
+    setSortByPrice(selectedValue);
+    handleFilterChange(selectedValue);
   };
 
-  const selectByPriceHandler = (selectedValue) =>{
-    setSortByPrice(selectedValue);
-    handleFilterChange(selectedCategories,selectedValue)
-  }
-
   return (
-    <div className="w-full md:w-[20%]">
-      <div className="flex items-center justify-between">
-        <h1 className="font-semibold flex items-center text-lg gap-0.5 md:text-xl">
-          Filters <Funnel size={16} />
-        </h1>
-        <Select onValueChange={selectByPriceHandler}>
+    <div className="w-full md:w-[15%]">
+      <h1 className="font-semibold flex items-center text-lg gap-0.5 md:text-xl">
+        Filters <Funnel size={16} />
+      </h1>
+      <div className="flex flex-row md:flex-col gap-2 w-full mt-4">
+        <Select onValueChange={selectByPriceHandler} className="w-full">
           <SelectTrigger>
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
@@ -63,22 +63,13 @@ const Filter = ({ handleFilterChange }) => {
             </SelectGroup>
           </SelectContent>
         </Select>
+
+
+    
       </div>
-      <Separator className="my-4" />
-      <div className="font-semibold">
-        <h1 className="bg-gray-900 text-white my-2 px-2 py-1">Categories</h1>
-        {categories.map((category) => (
-          <div className="flex items-center space-x-2 my-2">
-            <Checkbox
-              id={category.id}
-              onCheckedChnaged={() => handleCategoryChange(category.id)}
-            />
-            <Label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-              {category.label}
-            </Label>
-          </div>
-        ))}
-      </div>
+
+
+
     </div>
   );
 };

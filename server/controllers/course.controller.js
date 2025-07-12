@@ -250,41 +250,38 @@ export const getLectureById = async (req, res) => {
   }
 };
 
-export const searchCourse = async(req,res) => {
+export const searchCourse = async (req, res) => {
   try {
-    const { query = "", categories = [], sortByPrice = "" } = req.query;
+    const { query = "", sortByPrice = "" } = req.query;
 
     //create Search Query
     const searchCriteria = {
       isPublished: true,
       $or: [
-        
-          {courseTitle: { $regex: query, $options: "i" }},
-          {subTitle: { $regex: query, $options: "i" }},
-          {category: { $regex: query, $options: "i" }}
-        
+        { courseTitle: { $regex: new RegExp(query, "i") } },
+        { subTitle: { $regex: new RegExp(query, "i") } },
+        // { category: { $regex: new RegExp(query, "i") } },
       ],
     };
 
-
     //If Categories are Selected
-    if(categories.length>0){
-      searchCriteria.category = {$in:categories}
-    }
+    // if (categories.length > 0) {
+    //   searchCriteria.category = { $in: categories };
+    // }
 
     //defining sorting order
     const sortOptions = {};
-    if(sortByPrice ==="low"){
+    if (sortByPrice === "low") {
       sortOptions.coursePrice = 1; //sort by Price in Ascending order
-    }
-    else if(sortByPrice ==="high"){
+    } else if (sortByPrice === "high") {
       sortOptions.coursePrice = -1; //sort by Price in descending order
     }
 
-    let courses = await Course.find(searchCriteria).populate({path:"creator",slect:"name photoUrl"}).sort(sortOptions);
+    let courses = await Course.find(searchCriteria)
+      .populate({ path: "creator", select: "name photoUrl" })
+      .sort(sortOptions);
 
-    return res.status(200).json({success:true,courses:courses || []})
-
+    return res.status(200).json({ success: true, courses: courses || [] });
   } catch (error) {
     console.log(error);
     return res
