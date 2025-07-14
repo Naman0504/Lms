@@ -29,7 +29,7 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-8 border-2 border-red-800 h-[90vh]">
+    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-8 h-full">
       <div className="my-6 ">
         {query && (
           <>

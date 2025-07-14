@@ -20,8 +20,8 @@ const HeroSection = () => {
           Find the Best Courses for You
         </h1>
         <p className="text-black dark:text-ray-400 mb-8">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
-          illo!
+          
+  Explore top-rated courses tailored to boost your skills and achieve your goals.
         </p>
 
         <form

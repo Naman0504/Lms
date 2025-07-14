@@ -21,6 +21,7 @@ import {
 import { toast } from "sonner";
 import { useGetPublishedCourseQuery } from "@/features/api/courseApi";
 import { Link } from "react-router-dom";
+import CourseCard from "./CourseCard";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -91,11 +92,11 @@ const Profile = () => {
   console.log("publishedCourseofCreator: ", publishedCourseofCreator);
 
   return (
-    <div className="my-24 max-w-4xl mx-auto h-screen px-4">
-      <h1 className="font-bold text-2xl text-center md:text-left">Profile</h1>
+    <div className="my-24 w-full md:max-w-4xl mx-0 md:mx-auto h-full px-0">
+      <h1 className="font-bold  text-3xl md:text-2xl text-center md:text-left">Profile</h1>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 my-5">
-        <div className="flex flx-col items-center">
-          <Avatar className="w-20 h-20 md:h-32 md:w-32 p-1 border-2 border-gray-100 rounded-full">
+        <div className="flex items-center">
+          <Avatar className="w-48 h-48 md:h-32 md:w-32 p-1 border-2 border-gray-100 rounded-full">
             <AvatarImage
               className="w-full h-full rounded-full object-cover hover:scale-105 hover:rotate-1 duration-700"
               src={user?.photoUrl || "https://github.com/shadcn.png"}
@@ -187,12 +188,16 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="mt-8">
+      <div className="mt-8 px-1 flex flex-col items-center md:items-start">
+        <div>
+          
         <h1 className="font-semibold text-xl w-fit px-5 border-b bg-gradient-to-r from-rose-100 to-teal-100 border-t border-gray-50">
           {user.role === "instructor"
             ? "Courses you have Published"
             : "Courses you are Enrolled in"}
         </h1>
+        
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-5">
           {enrolledCourses.length && enrolledCourses.length === 0 ? (
             <h1 className="text-lg text-gray-500 col-span-full text-center">
@@ -204,14 +209,14 @@ const Profile = () => {
             publishedCourseofCreator.map((course) => (
               <Link key={course._id} to="/admin/course">
                 {" "}
-                <Course course={course} />
+                <CourseCard course={course} />
               </Link>
             ))
           ) : (
             enrolledCourses.map((course) => (
               <Link to={`/course-details/${course._id}`}>
                 
-                <Course course={course} key={course._id} />
+                <CourseCard course={course} key={course._id} />
               </Link>
             ))
           )}

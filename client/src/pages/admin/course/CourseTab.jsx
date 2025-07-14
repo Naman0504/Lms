@@ -134,8 +134,8 @@ const CourseTab = () => {
   
   return (
     <Card>
-      <CardHeader className="flex justify-between flex-row">
-        <div>
+      <CardHeader className="flex justify-between  md:flex-row flex-col-reverse">
+        <div className="mt-2 md:mt-unset">
           <CardTitle>Basic Course Information</CardTitle>
           <CardDescription>Make changes to your courses here.</CardDescription>
         </div>
@@ -155,7 +155,7 @@ const CourseTab = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4 mt-5">
+        <div className="space-y-4 mt-3 md:mt-5">
           <div className="flex flex-col gap-2">
             <Label>Title</Label>
             <Input

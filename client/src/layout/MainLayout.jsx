@@ -6,13 +6,13 @@ import { Outlet } from "react-router-dom";
 const MainLayout = () => {
   return (
     <>
-      <div>
+      <div className="overflow-x-hidden h-screen">
         <Navbar />
-        <div className="border-2 border-green">
+        <div className="">
           <Outlet />
         </div>
-      </div>
       <Footer />
+      </div>
     </>
   );
 };

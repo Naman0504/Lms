@@ -45,9 +45,9 @@ const AddCourse = () => {
   
 
   return (
-    <div className="flex-1 mx-10">
+    <div className="flex-1 mx-1 md:mx-10 h-full">
       <div className="mb-4">
-        <h1 className="font-bold text-2xl">
+        <h1 className="font-bold text-xl md:text-2xl">
           Add course, add some basic course details for your new course
         </h1>
         <p className="text-sm ">

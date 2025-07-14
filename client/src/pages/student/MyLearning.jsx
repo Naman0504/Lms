@@ -2,6 +2,7 @@ import React from "react";
 import Course from "./Course";
 import { useLoadUserQuery } from "@/features/api/authApi";
 import { Link } from "react-router-dom";
+import CourseCard from "./CourseCard";
 
 const MyLearning = () => {
 
@@ -22,7 +23,7 @@ const MyLearning = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {MyLearning.map((course,index) => (
               <Link to={`/course-progress/${course._id}`} key={index}>
-              <Course key={index} course={course}/>
+              <CourseCard course={course}/>
               </Link>
             ))}
           </div>

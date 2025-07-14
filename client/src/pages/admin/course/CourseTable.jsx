@@ -67,7 +67,7 @@ const CourseTable = () => {
 
   if(isLoading) return <h1>Loading...</h1>
   return (
-    <div>
+    <div className="h-full py-2">
       <Button onClick={() => navigate("create")}>
         Create new course
       </Button>

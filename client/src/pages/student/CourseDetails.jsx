@@ -81,14 +81,14 @@ const handleContinueCourse=()=>{
           </Card>
         </div>
 
-        <div className="w-full lg:w-1/3">
+        <div className="w-full lg:w-1/3 relative">
           <Card className="gap-2">
-            <CardContent className=" flex flex-col">
+            <CardContent className=" flex flex-col mt-2">
               <div className="w-full aspect-video mb-4">
                 
                 <ReactPlayer width="100%" height="100%" url={course.lectures[0].videoUrl} controls={true} />
               </div>
-              <h1 className="px-4 py-1 w-fit rounded-sm bg-gray-900 text-white text-center">{course.courseTitle}</h1>
+              <h1 className="px-4 py-1 w-fit rounded-lg bg-[#f0f4f9] text-gray-900 text-center text-xs absolute -left-2 -top-1.5">{course.courseTitle}</h1>
               <Separator className="my-2" />
               <h1 className="text-lg font-bold md:text-xl">
                 Course Price - {course.coursePrice} ₹

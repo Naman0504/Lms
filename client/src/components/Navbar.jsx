@@ -35,19 +35,14 @@ import { useLogoutUserMutation } from "@/features/api/authApi";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
 
-
-
 const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
-  
 
   const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
   const navigate = useNavigate();
   const logoutHandler = async () => {
     await logoutUser();
   };
-
-
 
   useEffect(() => {
     if (isSuccess) {
@@ -63,7 +58,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <BookText size={30} />
           <Link to="/">
-          <h1 className="hidden md:block font-bold text-2xl">E-learn</h1>
+            <h1 className="hidden md:block font-bold text-2xl">E-learn</h1>
           </Link>
         </div>
 
@@ -71,47 +66,53 @@ const Navbar = () => {
         <div className="flex items-center">
           {user ? (
             <>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className="w-10 h-10">
-                  <AvatarImage
-                    className="w-10 h-10 rounded-full"
-                    src={user.photoUrl || "https://github.com/shadcn.png"}
-                    alt="@shadcn"
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="start">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuGroup>
-                  {user.role == "student" && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="w-10 h-10">
+                    <AvatarImage
+                      className="w-10 h-10 rounded-full"
+                      src={user.photoUrl || "https://github.com/shadcn.png"}
+                      alt="@shadcn"
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56" align="start">
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuGroup>
+                    {user.role == "student" && (
+                      <DropdownMenuItem>
+                        <Link to="my-learning">My Learning</Link>
+                      </DropdownMenuItem>
+                    )}
                     <DropdownMenuItem>
-                      <Link to="my-learning">My Learning</Link>
+                      <Link to="profile">Edit Profile</Link>
                     </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem>
-                    <Link to="profile">Edit Profile</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={logoutHandler}>
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
+                    <DropdownMenuItem onClick={logoutHandler}>
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
 
-                {/* <DropdownMenuSeparator />
+                  {/* <DropdownMenuSeparator />
                 <DropdownMenuItem>Log out</DropdownMenuItem> */}
-                {user.role === "instructor" && (
-                  <>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                   <Link to="/admin/dashboard">Dashboard</Link></DropdownMenuItem>
-                  </>
-                )}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <p className="text-gray-700 dark:text-gray-100 font-semibold text-sm ml-2">
-              {user.name}
-            </p>
+                  {user.role === "instructor" && (
+                    <>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        <Link to="/admin/dashboard">Dashboard</Link>
+                      </DropdownMenuItem>
+                    </>
+                  )}
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="flex flex-col ml-2 items-center justify-center">
+                <p className="text-gray-700 dark:text-gray-100 font-semibold text-sm ml-1">
+                  {user.name}
+                </p>
+                <p className="text-gray-700 dark:text-gray-100  text-[10px] font-semibold ml-1">
+                  ({user.role.toUpperCase()})
+                </p>
+              </div>
             </>
           ) : (
             <div className="flex items-center gap-2">
