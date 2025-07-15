@@ -17,13 +17,13 @@ connectDB();
 
 const app = express();
 
-
-app.use(express.json());
-app.use(cookieParser()); 
 app.use(cors({
   origin: ["http://localhost:5173","https://learning-mgt-ssystem.vercel.app"], 
   credentials: true
 }));
+app.use(express.json());
+app.use(cookieParser()); 
+
 
 // Routes
 app.use("/api/v1/user", userRoute);
