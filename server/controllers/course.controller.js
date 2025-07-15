@@ -300,7 +300,7 @@ export const getPublishedCourse = async (req, res) => {
       return res.status(404).json({ message: "Courses Not Found" });
     }
 
-    return res.status(200).json(courses );
+    return res.status(200).json({courses} );
   } catch (error) {
     console.log(error);
     return res.status(500).json({
