@@ -5,7 +5,7 @@ dotenv.config();
 export const paymentApi = createApi({
   reducerPath: "paymentApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${VITE_API_BASE_URL}/api/v1/purchase`,
+    baseUrl: `${import.meta.env.VITE_API_BASE_URL}/api/v1/purchase`,
     credentials: "include",
   }),
   endpoints: (b) => ({
