@@ -80,6 +80,7 @@ const Profile = () => {
     return <h1 className="text-center my-10 text-xl">Profile Loading...</h1>;
 
   const user = data?.user;
+  console.log(user)
 
   const enrolledCourses = user?.enrolledCourses || [];
 
