@@ -1,9 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import dotenv from "dotenv";
+dotenv.config();
 
 export const paymentApi = createApi({
   reducerPath: "paymentApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/v1/purchase",
+    baseUrl: `${VITE_API_BASE_URL}/api/v1/purchase`,
     credentials: "include",
   }),
   endpoints: (b) => ({
