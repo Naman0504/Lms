@@ -17,7 +17,7 @@ import EditCourse from "./pages/admin/course/EditCourse";
 import CreateLecture from "./pages/admin/lectures/CreateLecture";
 import EditLecture from "./pages/admin/lectures/EditLecture";
 import CourseDetails from "./pages/student/CourseDetails";
-import CourseProgress from "./pages/student/courseProgress";
+import CourseProgress from "./pages/student/CourseProgress";
 import SearchPage from "./pages/student/SearchPage";
 import {
   AdminRoute,
