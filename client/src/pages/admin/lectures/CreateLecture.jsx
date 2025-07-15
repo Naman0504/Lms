@@ -44,8 +44,8 @@ const CreateLecture = () => {
   }, [isSuccess, error]);
 
   return (
-    <div className="flex-1 mx-10">
-      <div className="mb-4">
+    <div className="flex-1 h-screen md:h-full mx-1 md:mx-10">
+      <div className="mb-4 mt-4 md:mt-unset">
         <h1 className="font-bold text-2xl">
           Add Lecture, add some basic details for your new Lecture
         </h1>
@@ -53,7 +53,7 @@ const CreateLecture = () => {
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non, itaque.
         </p>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 mt-10 md:mt-unset">
         <div>
           <Label className="mb-1">Title</Label>
           <Input

@@ -9,7 +9,7 @@ const Lecture = ({ lecture, index, courseId }) => {
   };
   return (
     <div className="flex items-center justify-between bg-[#F7F9FA] dark:bg-[#1F1F1F] px-4 py-2 rounded-md my-2">
-      <h1 className="font-semibold text-gray-700 dark:text-gray-400">
+      <h1 className="font-semibold text-xs md:text-lg text-gray-700 dark:text-gray-400">
        Lecture - {index+1} : {lecture.lectureTitle}
       </h1>
       <Edit

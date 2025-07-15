@@ -181,10 +181,10 @@ const CourseTab = () => {
             <RichTextEditor input={input} setInput={setInput} />
           </div>
 
-          <div className="flex items-center gap-5">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
             <div className="flex flex-col gap-2">
               <Label>Category</Label>
-              <Select onValueChange={selectCategory}>
+              <Select onValueChange={selectCategory} className="">
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Select a Category" />
                 </SelectTrigger>

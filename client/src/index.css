@@ -118,3 +118,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+/* Custom Scrollbar for Webkit Browsers */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: var(--color-muted);
+}
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary);
+  border-radius: 8px;
+}
+
+body{
+  overflow:auto;
+  height: 100%;
+  width: 100%;
+
+  
+  margin: 0;
+  padding: 0;
+}

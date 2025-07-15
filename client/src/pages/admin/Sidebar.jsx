@@ -4,7 +4,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col lg:flex-row h-full mt-15">
+    <div className="flex flex-col lg:flex-row h-full mt-0 md:mt-15">
       <div className="w-full h-fit sm:w-[250px] space-y-8 border-gray-300 dark:border-gray-700 bg-gradient-to-b from-yellow-100 via-green-100 to-green-200 p-5 sticky top-0 md:h-screen">
         {/* <div className="space-y-4 mt-4">
           <Link to="dashboard" className="flex items-center gap-2 ">

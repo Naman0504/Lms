@@ -29,7 +29,7 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto mt-10 p-4 md:p-8 h-full">
+    <div className="max-w-7xl mx-auto mt-0 md:mt-10 p-4 md:p-8 md:h-screen mb-10">
       <div className="my-6 ">
         {query && (
           <>
@@ -43,7 +43,7 @@ const SearchPage = () => {
           </>
         )}
       </div>
-      <div className="flex flex-col md:flex-row gap-10 ">
+      <div className="h-full scrollbar-custom md:min-h-10/12 overflow-y-scroll flex flex-col md:flex-row gap-12">
         <Filter handleFilterChange={handleFilterChange} />
         <div className="flex-1">
           {isLoading ? (

@@ -12,7 +12,7 @@ const MyLearning = () => {
   console.log("MyLearning: ", MyLearning);
   // const myLearningCourses = [1, 2, 3, 4, 5];
   return (
-    <div className="max-w-5xl mx-auto my-24 px-4 md:px-0 h-screen">
+    <div className="max-w-5xl mx-auto my-16 px-4 md:px-0 h-screen">
       <h1 className="font-bold text-2xl">My Learnings</h1>
       <div className="my-5">
         {isLoading ? (
