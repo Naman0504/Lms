@@ -18,7 +18,7 @@ connectDB();
 const app = express();
 
 app.use(cors({
-  origin: ["http://localhost:5173","https://learning-mgt-ssystem-qmtx7dt5s-naman-kumar-matiyaras-projects.vercel.app"], 
+  origin: ["https://learning-mgt-ssystem.vercel.app","http://localhost:5173",], 
   credentials: true
 }));
 app.use(express.json());
