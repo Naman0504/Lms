@@ -21,8 +21,8 @@ app.use(cors({
   origin: ["http://localhost:5173","https://learning-mgt-ssystem.vercel.app"], 
   credentials: true
 }));
-app.use(express.json());
 app.use(cookieParser()); 
+app.use(express.json());
 
 
 // Routes
