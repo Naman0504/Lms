@@ -31,7 +31,7 @@ const Login = () => {
     name: "",
     email: "",
     password: "",
-    role: "student",
+    role: "student",  
   });
 
   const [
