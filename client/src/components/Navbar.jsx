@@ -1,4 +1,11 @@
-import { BookText, Menu } from "lucide-react";
+import {
+  BookText,
+  LayoutDashboard,
+  LibraryBig,
+  LogOut,
+  Menu,
+  UserPen,
+} from "lucide-react";
 import React, { useEffect } from "react";
 import { Button } from "./ui/button";
 import {
@@ -58,7 +65,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <BookText size={30} />
           <Link to="/">
-            <h1 className="hidden md:block font-bold text-2xl">E-learn</h1>
+            <h1 className="hidden md:block font-bold text-2xl">E-Learning</h1>
           </Link>
         </div>
 
@@ -128,9 +135,24 @@ const Navbar = () => {
       </div>
 
       {/* //For Mobile Nav */}
+
       <div className="flex md:hidden items-center justify-between px-4 h-full">
-        <h1 className="font-extrabold text-2xl">e-Learning</h1>
-        <MobileNavbar />
+        <Link to="/">
+          <h1 className="font-bold flex items-center text-2xl">
+            {" "}
+            <BookText size={20} /> e-Learn
+          </h1>
+        </Link>
+        {user ? (
+          <MobileNavbar logoutHandler={logoutHandler} user={user} />
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => navigate("/login")} >
+              Signup
+            </Button>
+            <Button onClick={() => navigate("/login")}>Login</Button>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -138,8 +160,8 @@ const Navbar = () => {
 
 export default Navbar;
 
-const MobileNavbar = () => {
-  const role = "instructor";
+const MobileNavbar = ({ user, logoutHandler }) => {
+  console.log("MOBILENAV--", user);
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -147,26 +169,68 @@ const MobileNavbar = () => {
           size="icon"
           className="rounded-full bg-gray-100 hover:bg-gray-100 text-black"
         >
-          <Menu />
+          <Menu className={"text-bold"} />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col">
-        <SheetHeader className="flex flex-row items-center mt-5 justify-between">
-          <SheetTitle className="font-bold text-xl">E-Learning</SheetTitle>
-          <DarkMode />
-        </SheetHeader>
-        <Separator className="mr-2" />
-        <nav className="flex flex-col p-4 space-y-4">
-          <span>My Learning</span>
-          <span>Edit Profile</span>
-          <span>Logout</span>
-        </nav>
-        {role === "instructor" && (
-          <SheetFooter>
-            <SheetClose asChild>
-              <Button type="submit">Dashboard</Button>
-            </SheetClose>
-          </SheetFooter>
+      <SheetContent className="flex flex-col h-fit">
+        {user && (
+          <>
+            <div className="h-fit">
+              <SheetHeader className="mt-5 flex gap-3 items-center flex-row">
+                <Avatar className="w-14 h-14 rounded-full">
+                  <AvatarImage
+                    className="w-full h-full rounded-full"
+                    src={user.photoUrl || "https://github.com/shadcn.png"}
+                    alt={user.name}
+                  />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col items-center">
+                  <p className="text-gray-700 dark:text-gray-100 font-semibold text-xl ml-1">
+                    {user.name}
+                  </p>
+                  <p className="text-gray-700 dark:text-gray-100 text-[11.5px] font-semibold ml-1">
+                    {user.role.toUpperCase()}
+                  </p>
+                </div>
+              </SheetHeader>
+              <Separator className="mr-2 mt-2" />
+              <nav className="flex flex-col p-4 space-y-4 mt-2">
+                {user.role === "student" && (
+                  <Link to="/my-learning">
+                    <span className="flex gap-2 items-center font-semibold">
+                      <LibraryBig size={20} /> My Learning
+                    </span>
+                  </Link>
+                )}
+                <Link to="/profile">
+                  <span className="flex gap-2 items-center font-semibold">
+                    <UserPen size={20} /> Edit Profile
+                  </span>
+                </Link>
+                <span
+                  className="flex gap-2 items-center font-semibold cursor-pointer"
+                  onClick={() => {
+                    logoutHandler();
+                  }}
+                >
+                  <LogOut size={20} /> Logout
+                </span>
+              </nav>
+
+              {user.role === "instructor" && (
+                <SheetFooter>
+                  <SheetClose asChild>
+                    <Link to="/admin/dashboard">
+                      <Button type="button" className="flex gap-2 w-full">
+                        <LayoutDashboard size={20} /> Dashboard
+                      </Button>
+                    </Link>
+                  </SheetClose>
+                </SheetFooter>
+              )}
+            </div>
+          </>
         )}
       </SheetContent>
     </Sheet>

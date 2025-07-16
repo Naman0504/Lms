@@ -93,7 +93,7 @@ const Profile = () => {
   console.log("publishedCourseofCreator: ", publishedCourseofCreator);
 
   return (
-    <div className="my-24 w-full md:max-w-4xl mx-0 md:mx-auto h-full px-0">
+    <div className="my-12 w-full md:max-w-4xl mx-0 md:mx-auto h-full md:h-screen px-0">
       <h1 className="font-bold  text-3xl md:text-2xl text-center md:text-left">Profile</h1>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 my-5">
         <div className="flex items-center">

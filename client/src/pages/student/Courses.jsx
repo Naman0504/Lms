@@ -9,11 +9,11 @@ const Courses = () => {
   if (isError) return <h1>Some Error occurred while fetching courses</h1>;
 
   return (
-    <div className="bg-gray-50 bg-[url('client/src/assets/bg-image.jpg')] bg-cover bg-center px-5 md:px-10 py-10">
-      <div className="max-w-7xl mx-auto p-0 md:p-6">
+    <div className="bg-gray-50 px-1 md:px-10 py-10">
+      <div className="max-w-7xl">
         <h2 className="font-bold text-3xl text-center mb-10">Our Courses</h2>
 
-        <div className="grid items-center place-content-center grid-col-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex flex-col items-center  md:grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {isLoading
             ? Array.from({ length: 8 }).map((_, index) => (
                 <CourseSkeleton key={index} />

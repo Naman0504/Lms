@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Course = ({ course }) => {
   
   return (
-    <Card className="overflow-hidden rounded-lg p-0 m-0 bg-white  dark:bg-gray-800 shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500">
+    <Card className={"w-[330px] py-0 md:w-full overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-500"}>
       <div className="relative">
         <img
           className="h-36 w-full object-cover rounded-t-lg"
