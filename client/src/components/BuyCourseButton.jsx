@@ -32,7 +32,7 @@ const BuyCourseButton = ({ amount,courseThumbnail,courseName, courseId, userId, 
 
       const {
         data: { key },
-      } = await axios.get("http://localhost:8080/api/getkey");
+      } = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/getkey`);
 
       const options = {
         key,

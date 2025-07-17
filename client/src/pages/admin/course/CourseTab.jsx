@@ -27,6 +27,7 @@ import {
   usePublishCourseMutation,
 } from "@/features/api/courseApi";
 import { toast } from "sonner";
+import Preloader from "@/components/Preloader";
 
 const CourseTab = () => {
   const navigate = useNavigate();
@@ -129,7 +130,7 @@ const CourseTab = () => {
   }, [isSuccess, error]);
 
   if (courseByIdLoading)
-    return <Loader2 className="m-auto w-4 h-4 animate-spin" />;
+    return (<Preloader/>);
 
   
   return (

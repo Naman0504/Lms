@@ -6,10 +6,11 @@ import { Provider } from "react-redux";
 import { appStore } from "./app/store";
 import { Toaster } from "./components/ui/sonner";
 import { useLoadUserQuery } from "./features/api/authApi";
+import Preloader from "./components/Preloader";
 
 const Custom = ({ children }) => {
   const { isLoading } = useLoadUserQuery();
-  return <>{isLoading ? <h1 className="flex justify-center items-center text-2xl">Loading....</h1> : <>{children}</>}</>;
+  return <>{isLoading ? <Preloader/> : <>{children}</>}</>;
 };
 
 createRoot(document.getElementById("root")).render(

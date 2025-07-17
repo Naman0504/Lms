@@ -1,3 +1,4 @@
+import Preloader from "@/components/Preloader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLoadUserQuery } from "@/features/api/authApi";
 import { useGetPurchasedCoursesQuery } from "@/features/api/paymentApi";
@@ -27,7 +28,7 @@ const Dashboard = () => {
 
   console.log("Filtered Purchased Courses: ", purchasedCourses);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return(<Preloader/>);
   if (isLoading)
     return <h1 className="text-red-500">Failed to get Purchased Course.</h1>;
 

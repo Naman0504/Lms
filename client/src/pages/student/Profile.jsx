@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { useGetPublishedCourseQuery } from "@/features/api/courseApi";
 import { Link } from "react-router-dom";
 import CourseCard from "./CourseCard";
+import Preloader from "@/components/Preloader";
 
 const Profile = () => {
   const [name, setName] = useState("");
@@ -77,7 +78,7 @@ const Profile = () => {
   };
 
   if (isLoading)
-    return <h1 className="text-center my-10 text-xl">Profile Loading...</h1>;
+    return (<Preloader/>);
 
   const user = data?.user;
   console.log(user)

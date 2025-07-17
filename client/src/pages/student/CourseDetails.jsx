@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { useGetCourseByIdQuery } from "@/features/api/courseApi";
 import { useGetCourseDetailWithStatusQuery } from "@/features/api/paymentApi";
 import ReactPlayer from "react-player";
+import Preloader from "@/components/Preloader";
 
 const CourseDetails = () => {
       const param = useParams();
@@ -27,10 +28,13 @@ const CourseDetails = () => {
 
 
 const {data,isLoading,isSuccess,isError} = useGetCourseDetailWithStatusQuery(courseId)
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading) return (<Preloader/>);
   if (isError) return <h1>Failed to Load Course Details</h1>;
 //   if (!course) return <p>Course not found</p>;
-const {course,purchased} = data
+const {course,purchased} = data;
+
+console.log("Course==",course)
+console.log("purchased==",purchased)
 
 
 const handleContinueCourse=()=>{
@@ -95,6 +99,7 @@ const handleContinueCourse=()=>{
               </h1>
             </CardContent>
             <CardFooter className="flex justify-center px-4 py-2">
+              
               {purchased ? (
                 <Button className="w-full" onClick={handleContinueCourse}>Continue Course</Button>
               ) : (

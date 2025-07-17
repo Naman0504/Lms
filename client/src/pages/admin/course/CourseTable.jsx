@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { useGetCreatorCourseQuery } from "@/features/api/courseApi";
 import { Edit } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import Preloader from "@/components/Preloader";
 
 
 
@@ -22,7 +23,7 @@ const CourseTable = () => {
 
   const {data,isLoading} = useGetCreatorCourseQuery()
 
-  if(isLoading) return <h1>Loading...</h1>
+  if(isLoading) return (<Preloader/>)
   return (
     <div className="h-screen md:h-full py-2">
       <Button onClick={() => navigate("create")}>
