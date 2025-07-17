@@ -13,12 +13,6 @@ const BuyCourseButton = ({ amount,courseThumbnail,courseName, courseId, userId, 
   const [verifyPayment] = useVerifyPaymentMutation();
   const navigate = useNavigate();
 
-  const loadRazorpay = () => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onerror = () => alert("Razorpay SDK load failed. Are you online?");
-    document.body.appendChild(script);
-  };
 
   const handlePurchase = async () => {
     loadRazorpay();

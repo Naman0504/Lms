@@ -65,7 +65,7 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <BookText size={30} />
           <Link to="/">
-            <h1 className="hidden md:block font-bold text-2xl">E-Learning</h1>
+            <h1 className="hidden md:block font-bold text-2xl">e-Learn</h1>
           </Link>
         </div>
 
