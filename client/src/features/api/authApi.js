@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { userLoggedIn,userLoggedOut } from "../authSlice";
+import { userLoggedIn, userLoggedOut } from "../authSlice";
 
 const USER_API = `${import.meta.env.VITE_API_BASE_URL}/api/v1/user`;
 
@@ -38,11 +38,13 @@ export const authApi = createApi({
       query: () => ({
         url: "/logout",
         method: "GET",
+        credentials: "include",
       }),
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
+          await queryFulfilled;
           dispatch(userLoggedOut());
-          dispatch(api.util.resetApiState());
+          dispatch(authApi.util.resetApiState());
         } catch (error) {
           console.log(error);
         }

@@ -47,9 +47,14 @@ const Navbar = () => {
 
   const [logoutUser, { data, isSuccess }] = useLogoutUserMutation();
   const navigate = useNavigate();
+
   const logoutHandler = async () => {
-    await logoutUser();
-  };
+  try {
+    await logoutUser().unwrap(); // unwrap to handle success/failure directly
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+};
 
   useEffect(() => {
     if (isSuccess) {
