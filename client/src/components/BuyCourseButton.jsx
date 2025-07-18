@@ -15,7 +15,7 @@ const BuyCourseButton = ({ amount,courseThumbnail,courseName, courseId, userId, 
 
 
   const handlePurchase = async () => {
-    loadRazorpay();
+  
 
     try {
       const { order } = await createOrder({
