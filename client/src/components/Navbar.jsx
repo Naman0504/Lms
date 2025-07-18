@@ -6,7 +6,7 @@ import {
   Menu,
   UserPen,
 } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -161,9 +161,12 @@ const Navbar = () => {
 export default Navbar;
 
 const MobileNavbar = ({ user, logoutHandler }) => {
-  console.log("MOBILENAV--", user);
+  
+  const [open, setOpen] = useState(false);
+
+  const handleClose = () => setOpen(false);
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
           size="icon"
@@ -197,13 +200,13 @@ const MobileNavbar = ({ user, logoutHandler }) => {
               <Separator className="mr-2 mt-2" />
               <nav className="flex flex-col p-4 space-y-4 mt-2">
                 {user.role === "student" && (
-                  <Link to="/my-learning">
+                  <Link to="/my-learning" onClick={handleClose}>
                     <span className="flex gap-2 items-center font-semibold">
                       <LibraryBig size={20} /> My Learning
                     </span>
                   </Link>
                 )}
-                <Link to="/profile">
+                <Link to="/profile" onClick={handleClose}>
                   <span className="flex gap-2 items-center font-semibold">
                     <UserPen size={20} /> Edit Profile
                   </span>
@@ -221,7 +224,7 @@ const MobileNavbar = ({ user, logoutHandler }) => {
               {user.role === "instructor" && (
                 <SheetFooter>
                   <SheetClose asChild>
-                    <Link to="/admin/dashboard">
+                    <Link to="/admin/dashboard" onClick={handleClose}>
                       <Button type="button" className="flex gap-2 w-full">
                         <LayoutDashboard size={20} /> Dashboard
                       </Button>
