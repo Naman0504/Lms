@@ -100,7 +100,8 @@ const handleContinueCourse=()=>{
             </CardContent>
             <CardFooter className="flex justify-center px-4 py-2">
               
-              {purchased ? (
+              {
+                user.role === "student" ? (purchased ? (
                 <Button className="w-full" onClick={handleContinueCourse}>Continue Course</Button>
               ) : (
                 <BuyCourseButton
@@ -112,7 +113,11 @@ const handleContinueCourse=()=>{
                   courseThumbnail={course.courseThumbnail}
                 //   currency={course.currency || "INR"}
                 />
-              )}
+              )):(<></>)
+              }
+
+
+              {/* {} */}
             </CardFooter>
           </Card>
         </div>

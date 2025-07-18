@@ -13,6 +13,8 @@ const BuyCourseButton = ({ amount,courseThumbnail,courseName, courseId, userId, 
   const [verifyPayment] = useVerifyPaymentMutation();
   const navigate = useNavigate();
 
+  console.log("BUYUSERDATA",user)
+
 
   const handlePurchase = async () => {
   
@@ -69,6 +71,7 @@ const BuyCourseButton = ({ amount,courseThumbnail,courseName, courseId, userId, 
     }
   };
   return (
+    
     <Button className="w-full" onClick={handlePurchase}>
       Purchase Course
     </Button>

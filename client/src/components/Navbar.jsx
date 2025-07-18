@@ -90,17 +90,19 @@ const Navbar = () => {
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56" align="start">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuLabel className={"font-semibold"}>My Account</DropdownMenuLabel>
                   <DropdownMenuGroup>
                     {user.role == "student" && (
                       <DropdownMenuItem>
+                        <LibraryBig size={20} />
                         <Link to="my-learning">My Learning</Link>
                       </DropdownMenuItem>
                     )}
-                    <DropdownMenuItem>
-                      <Link to="profile">Edit Profile</Link>
+                    <DropdownMenuItem><UserPen size={20} />
+                      <Link to="profile"> Edit Profile</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={logoutHandler}>
+                    <DropdownMenuItem onClick={logoutHandler} className={"bg-black text-white"}>
+                      <LogOut size={20} className="text-white"/>
                       Logout
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
@@ -111,7 +113,7 @@ const Navbar = () => {
                     <>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>
-                        <Link to="/admin/dashboard">Dashboard</Link>
+                        <Link to="/admin/dashboard"><LayoutDashboard size={20} /> Dashboard</Link>
                       </DropdownMenuItem>
                     </>
                   )}
@@ -145,7 +147,7 @@ const Navbar = () => {
         <Link to="/">
           <h1 className="font-bold flex items-center text-2xl">
             {" "}
-            <BookText size={20} /> e-Learn
+            <BookText size={20} /> e-Learning
           </h1>
         </Link>
         {user ? (
