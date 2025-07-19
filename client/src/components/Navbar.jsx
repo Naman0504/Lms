@@ -101,7 +101,7 @@ const Navbar = () => {
                     <DropdownMenuItem><UserPen size={20} />
                       <Link to="profile"> Edit Profile</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={logoutHandler} className={"bg-black text-white hover:bg-none"}>
+                    <DropdownMenuItem onClick={logoutHandler} className={"bg-black md:bg-none text-black md:text-white"}>
                       <LogOut size={20} className="text-white"/>
                       Logout
                     </DropdownMenuItem>
