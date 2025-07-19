@@ -113,7 +113,8 @@ const Navbar = () => {
                     <>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem>
-                        <Link to="/admin/dashboard"><LayoutDashboard size={20} /> Dashboard</Link>
+                        <LayoutDashboard size={20} />
+                        <Link to="/admin/dashboard"> Dashboard</Link>
                       </DropdownMenuItem>
                     </>
                   )}
