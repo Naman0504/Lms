@@ -143,17 +143,46 @@ export const updateProfile = async (req, res) => {
     }
 
     //extract public id of the old image from the url if it exist
-    if (user.photoUrl) {
-      const publicId = user.photoUrl.split("/").pop().split(".")[0]; //extract public id
-      deleteMediaFromCloudinary(publicId);
-    }
+    // if (user.photoUrl) {
+    //   const publicId = user.photoUrl.split("/").pop().split(".")[0]; //extract public id
+    //   deleteMediaFromCloudinary(publicId);
+    // }
 
     //upload new Photo
-    const cloudResponse = await uploadMedia(profilePhoto.path);
+    // const cloudResponse = await uploadMedia(profilePhoto.path);
 
-    const photoUrl = cloudResponse.secure_url;
+    // const photoUrl = cloudResponse.secure_url;
 
-    const updatedData = { name, photoUrl };
+    // const updatedData = { name, photoUrl };
+
+    
+    const updatedData = {};
+
+    // Conditionally update name
+    if (name) {
+      updatedData.name = name;
+    }
+
+    // Conditionally update photo
+    if (profilePhoto) {
+      if (user.photoUrl) {
+        const publicId = user.photoUrl.split("/").pop().split(".")[0];
+        deleteMediaFromCloudinary(publicId);
+      }
+
+      const cloudResponse = await uploadMedia(profilePhoto.path);
+      updatedData.photoUrl = cloudResponse.secure_url;
+    }
+
+    // If nothing to update
+    if (Object.keys(updatedData).length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "No data provided for update",
+      });
+    }
+
+
     const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {
       new: true,
     }).select("-password");
