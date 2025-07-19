@@ -102,7 +102,7 @@ const Navbar = () => {
                       <Link to="profile"> Edit Profile</Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={logoutHandler}>
-                      <LogOut size={20} className="text-white"/>
+                      <LogOut size={20}/>
                       Logout
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
