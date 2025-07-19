@@ -101,7 +101,7 @@ const Navbar = () => {
                     <DropdownMenuItem><UserPen size={20} />
                       <Link to="profile"> Edit Profile</Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={logoutHandler} className={"bg-black text-white"}>
+                    <DropdownMenuItem onClick={logoutHandler} className={"bg-black text-white hover:bg-none"}>
                       <LogOut size={20} className="text-white"/>
                       Logout
                     </DropdownMenuItem>
@@ -121,7 +121,7 @@ const Navbar = () => {
               </DropdownMenu>
               <div className="flex flex-col ml-2 items-center justify-center">
                 <p className="text-gray-700 dark:text-gray-100 font-semibold text-sm ml-1">
-                  {user.name}
+                  {user?.name}
                 </p>
                 <p className="text-gray-700 dark:text-gray-100  text-[10px] font-semibold ml-1">
                   ({user.role.toUpperCase()})
